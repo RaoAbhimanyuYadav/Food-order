@@ -1,28 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
+import CartContext from "../store/cart-context";
 import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
 
 const Cart = (props) => {
-  const cartItems = (
-    <ul className={classes["cart-items"]}>
-      {[
-        {
-          id: "m4",
-          name: "Green Bowl",
-          description: "Healthy...and green...",
-          price: 18.99,
-        },
-      ].map((item) => (
-        <li key={item.id}>{item.name}</li>
-      ))}
-    </ul>
-  );
+  const cartCtx = useContext(CartContext);
+  let cartItems = <p>Cart is empty</p>;
+  if (cartCtx.items.length > 0) {
+    cartItems = (
+      <ul className={classes["cart-items"]}>
+        {cartCtx.items.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    );
+  }
+  const totalPrice = `Rs. ${cartCtx.totalAmount.toFixed(2)}`;
   return (
     <Modal onClose={props.onClose}>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
-        <span>100.23</span>
+        <span>{totalPrice}</span>
       </div>
       <div className={classes.actions}>
         <button className={classes["button--alt"]} onClick={props.onClose}>
