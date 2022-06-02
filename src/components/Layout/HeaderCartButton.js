@@ -23,7 +23,6 @@ const HeaderCartButton = (props) => {
       setbtnIsHighlighted(false);
     }, 300);
     return () => {
-      console.log("cleanup");
       clearTimeout(timer);
     };
   }, [items]);
